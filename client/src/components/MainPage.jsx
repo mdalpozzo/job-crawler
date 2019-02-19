@@ -65,7 +65,9 @@ class MainPage extends Component {
             <p>{this.state.jobs[i].location}</p>
             <p>{this.state.jobs[i].summary}</p>
             <p>{this.state.jobs[i].date}</p>
-            <a href={this.state.jobs[i].url}>Job Post</a>
+            <a href={this.state.jobs[i].url} target="_blank">
+              Job Post
+            </a>
           </div>
         );
       }

@@ -35,9 +35,8 @@
     "puppeteer": "^1.12.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "webpack": "^4.29.5"
-  },
-  "devDependencies": {
+    "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
-  }
+  },
+  "devDependencies": {}
 }
