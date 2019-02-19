@@ -9,7 +9,8 @@
     "start-dev": "nodemon server.js",
     "build": "cd client && webpack",
     "build-dev": "cd client && webpack --watch --mode development",
-    "sass": "sass --watch client/public/scss/styles.scss:client/public/styles.css"
+    "sass": "sass --watch client/public/scss/styles.scss:client/public/styles.css",
+    "heroku-postbuild": "cd client yarn install && yarn install && npm run build"
   },
   "repository": {
     "type": "git",
