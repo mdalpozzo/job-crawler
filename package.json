@@ -12,6 +12,9 @@
     "sass": "sass --watch client/public/scss/styles.scss:client/public/styles.css",
     "heroku-postbuild": "cd client yarn install && yarn install && npm run build"
   },
+  "engines": {
+    "node": "10.4.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mdalpozzo/job-crawler.git"
