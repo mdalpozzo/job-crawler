@@ -1,0 +1,39 @@
+{
+  "name": "job-crawler",
+  "version": "1.0.0",
+  "description": "A web scraper to find viable job listings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "start-dev": "nodemon server.js",
+    "build": "cd client && webpack",
+    "build-dev": "cd client && webpack --watch --mode development",
+    "sass": "sass --watch client/public/scss/styles.scss:client/public/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdalpozzo/job-crawler.git"
+  },
+  "author": "marlin dalpozzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdalpozzo/job-crawler/issues"
+  },
+  "homepage": "https://github.com/mdalpozzo/job-crawler#readme",
+  "proxy": "http://localhost:8000",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10",
+    "puppeteer": "^1.12.2",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "webpack": "^4.29.5"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.3"
+  }
+}
