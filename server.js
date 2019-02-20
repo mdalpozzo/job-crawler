@@ -30,7 +30,7 @@ app.get('/url', (req, res) => {
   (async () => {
     try {
       const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         args: ['--no-sandbox'],
       });
       const page = await browser.newPage();
@@ -38,7 +38,7 @@ app.get('/url', (req, res) => {
       await page.setUserAgent(
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
       );
-      const html = await page.content();
+      // const html = await page.content();
       // ambigous but works for now
       if (url.includes('www.indeed.com')) {
         const jobList = (await page.$$('.jobsearch-SerpJobCard'))
@@ -77,6 +77,20 @@ app.get('/url', (req, res) => {
       }
       // linked in
       if (url.includes('www.linkedin.com')) {
+        const [response] = await Promise.all([
+          page.waitForNavigation(),
+          page.click('.form-toggle'),
+        ]);
+        
+        response.then(() => {
+          await page.type('#username', 'marlin.dalpozzo@gmail.com');
+          await page.type('#password', 'marlin.dalpozzo@gmail.com');
+          await page.click('button');
+        })
+
+        const html = await page.content();
+        
+
         const jobList = (await page.$$('.jobs-search-result-item'))
           ? await page.$$('.jobs-search-result-item')
           : null;
@@ -110,7 +124,7 @@ app.get('/url', (req, res) => {
         }
       }
       res.send(html);
-      // res.send(jobs);
+      res.send(jobs);
       // await browser.close();
     } catch (err) {
       console.log('server issue', err);

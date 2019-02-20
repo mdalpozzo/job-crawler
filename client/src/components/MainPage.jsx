@@ -38,7 +38,15 @@ class MainPage extends Component {
   };
 
   linkedinJobs = () => {
-    this.getPage('https://www.linkedin.com/jobs/search?keywords=javascript');
+    this.getPage(
+      'https://www.linkedin.com/jobs/search?keywords=javascript&location=San%20Francisco%2C%20California&locationId=PLACES.us.7-1-0-38-1'
+    );
+  };
+
+  angelListJobs = () => {
+    this.getPage(
+      'https://www.linkedin.com/jobs/search?keywords=javascript&location=San%20Francisco%2C%20California&locationId=PLACES.us.7-1-0-38-1'
+    );
   };
 
   onChange = e => {
@@ -93,6 +101,7 @@ class MainPage extends Component {
         </form>
         <button onClick={this.indeedJobs}>Indeed</button>
         <button onClick={this.linkedinJobs}>LinkedIn</button>
+        <button onClick={this.angelListJobs}>AngelList</button>
         <div
           style={{
             border: '1px solid black',
