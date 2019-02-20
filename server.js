@@ -30,7 +30,7 @@ app.get('/url', (req, res) => {
   (async () => {
     try {
       const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         args: ['--no-sandbox'],
       });
       const page = await browser.newPage();
@@ -111,7 +111,7 @@ app.get('/url', (req, res) => {
       }
       res.send(html);
       // res.send(jobs);
-      await browser.close();
+      // await browser.close();
     } catch (err) {
       console.log('server issue', err);
     }
