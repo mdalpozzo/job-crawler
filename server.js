@@ -78,11 +78,17 @@ app.get('/url', (req, res) => {
       }
       //linked in
       if (url.includes('www.linkedin.com')) {
-        await page.waitFor('.jobs-search-result-item');
+        await page
+          .waitFor('.jobs-search-result-item')
+          .then(() => {
+            console.log('JOBS LOADED SUCCESFULLY');
+          })
+          .catch(err => {
+            console.log('JOBS NOT LOADED SUCCESFULLY', err);
+          });
         const jobList = (await page.$$('.jobs-search-result-item'))
           ? await page.$$('.jobs-search-result-item')
           : null;
-        console.log('helooooooo', jobList);
 
         for (const listing of jobList) {
           const jobTitle = (await listing.$('.listed-job-posting__title'))
