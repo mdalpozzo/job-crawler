@@ -38,7 +38,7 @@ class MainPage extends Component {
   };
 
   linkedinJobs = () => {
-    this.getPage('https://www.linkedin.com/jobs/search');
+    this.getPage('https://www.linkedin.com/jobs/search?keywords=javascript');
   };
 
   onChange = e => {
