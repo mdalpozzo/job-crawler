@@ -81,39 +81,33 @@ app.get('/url', (req, res) => {
         const jobList = (await page.$$('.jobs-search-result-item'))
           ? await page.$$('.jobs-search-result-item')
           : null;
-        if (jobList !== null) {
-          for (const listing of jobList) {
-            const jobTitle = (await listing.$('.listed-job-posting__title'))
-              ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
-              : null;
-            const company = (await listing.$('.listed-job-posting__company'))
-              ? await listing.$eval('.listed-job-posting__company', company => company.innerText)
-              : null;
-            const location = (await listing.$('.listed-job-posting__location'))
-              ? await listing.$eval('.listed-job-posting__location', location => location.innerText)
-              : null;
-            const summary = (await listing.$('.listed-job-posting__description'))
-              ? await listing.$eval(
-                  '.listed-job-posting__description',
-                  summary => summary.innerText
-                )
-              : null;
-            const date = (await listing.$('.posted-time-ago__text'))
-              ? await listing.$eval('.posted-time-ago__text', date => date.innerText)
-              : null;
-            let url = (await listing.$('a')) ? await listing.$eval('a', a => a.href) : null;
-            const jobItem = {
-              url,
-              jobTitle,
-              company,
-              location,
-              summary,
-              date,
-            };
-            jobs.push(jobItem);
-          }
-        } else {
-          console.log('joblist is null....');
+
+        for (const listing of jobList) {
+          const jobTitle = (await listing.$('.listed-job-posting__title'))
+            ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
+            : null;
+          const company = (await listing.$('.listed-job-posting__company'))
+            ? await listing.$eval('.listed-job-posting__company', company => company.innerText)
+            : null;
+          const location = (await listing.$('.listed-job-posting__location'))
+            ? await listing.$eval('.listed-job-posting__location', location => location.innerText)
+            : null;
+          const summary = (await listing.$('.listed-job-posting__description'))
+            ? await listing.$eval('.listed-job-posting__description', summary => summary.innerText)
+            : null;
+          const date = (await listing.$('.posted-time-ago__text'))
+            ? await listing.$eval('.posted-time-ago__text', date => date.innerText)
+            : null;
+          let url = (await listing.$('a')) ? await listing.$eval('a', a => a.href) : null;
+          const jobItem = {
+            url,
+            jobTitle,
+            company,
+            location,
+            summary,
+            date,
+          };
+          jobs.push(jobItem);
         }
       }
 
