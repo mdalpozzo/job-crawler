@@ -36,6 +36,12 @@ class MainPage extends Component {
     );
   };
 
+  linkedinJobs = () => {
+    this.getPage(
+      'https://www.linkedin.com/jobs/search/?f_E=2&keywords=javascript&location=San%20Francisco%2C%20California&locationId=us.7-1-0-38-1'
+    );
+  };
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -86,7 +92,8 @@ class MainPage extends Component {
           />
           <input type="submit" value="Scrape" />
         </form>
-        <button onClick={this.indeedJobs}>Look at Indeed JavaScript Jobs</button>
+        <button onClick={this.indeedJobs}>Indeed</button>
+        <button onClick={this.linkedinJobs}>LinkedIn</button>
         <div
           style={{
             border: '1px solid black',
