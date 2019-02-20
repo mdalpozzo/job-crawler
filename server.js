@@ -30,7 +30,7 @@ app.get('/url', (req, res) => {
   (async () => {
     try {
       const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: ['--no-sandbox'],
       });
       const page = await browser.newPage();
@@ -38,7 +38,7 @@ app.get('/url', (req, res) => {
       await page.setUserAgent(
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
       );
-      // const html = await page.content();
+      const html = await page.content();
       // ambigous but works for now
       if (url.includes('www.indeed.com')) {
         const jobList = (await page.$$('.jobsearch-SerpJobCard'))
@@ -109,8 +109,8 @@ app.get('/url', (req, res) => {
           jobs.push(jobItem);
         }
       }
-
-      res.send(jobs);
+      res.send(html);
+      // res.send(jobs);
       await browser.close();
     } catch (err) {
       console.log('server issue', err);

@@ -23,6 +23,7 @@ class MainPage extends Component {
       .then(res => {
         this.setState({
           jobs: res.data,
+          html: res.data,
         });
       })
       .catch(err => {
@@ -102,7 +103,8 @@ class MainPage extends Component {
             backgroundColor: '#eee',
           }}
         >
-          {jobList}
+          {/* {jobList} */}
+          <div dangerouslySetInnerHTML={{ __html: this.state.html }} />
         </div>
       </div>
     );
