@@ -83,15 +83,14 @@ app.get('/url', (req, res) => {
           page.waitForNavigation(),
           page.click('.form-toggle'),
         ]);
-        
-        response.then(() => {
+
+        response.then(async () => {
           await page.type('#username', keys.email);
           await page.type('#password', keys.lipass);
           await page.click('button');
-        })
+        });
 
         const html = await page.content();
-        
 
         const jobList = (await page.$$('.jobs-search-result-item'))
           ? await page.$$('.jobs-search-result-item')
