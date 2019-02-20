@@ -81,7 +81,8 @@ app.get('/url', (req, res) => {
         const jobList = (await page.$$('.jobs-search-result-item'))
           ? await page.$$('.jobs-search-result-item')
           : null;
-        console.log('HELOOOO THEERRREE', jobList);
+        const html = await page.content();
+        console.log('HELOOOO THEERRREE', html);
         for (const listing of jobList) {
           const jobTitle = (await listing.$('.listed-job-posting__title'))
             ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
