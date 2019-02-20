@@ -35,14 +35,16 @@ app.get('/url', (req, res) => {
       });
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: 'networkidle2' });
-      page.setUserAgent(
+      await page.setUserAgent(
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
       );
       // const html = await page.content();
       // ambigous but works for now
 
       if (url.includes('www.indeed.com')) {
-        const jobList = await page.$$('.jobsearch-SerpJobCard');
+        const jobList = (await page.$$('.jobsearch-SerpJobCard'))
+          ? await page.$$('.jobsearch-SerpJobCard')
+          : null;
 
         for (const listing of jobList) {
           const jobTitle = (await listing.$('.jobtitle'))
@@ -76,34 +78,42 @@ app.get('/url', (req, res) => {
       }
       //linked in
       if (url.includes('www.linkedin.com')) {
-        const jobList = await page.$$('.jobs-search-result-item');
-
-        for (const listing of jobList) {
-          const jobTitle = (await listing.$('.listed-job-posting__title'))
-            ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
-            : null;
-          const company = (await listing.$('.listed-job-posting__company'))
-            ? await listing.$eval('.listed-job-posting__company', company => company.innerText)
-            : null;
-          const location = (await listing.$('.listed-job-posting__location'))
-            ? await listing.$eval('.listed-job-posting__location', location => location.innerText)
-            : null;
-          const summary = (await listing.$('.listed-job-posting__description'))
-            ? await listing.$eval('.listed-job-posting__description', summary => summary.innerText)
-            : null;
-          const date = (await listing.$('.posted-time-ago__text'))
-            ? await listing.$eval('.posted-time-ago__text', date => date.innerText)
-            : null;
-          let url = (await listing.$('a')) ? await listing.$eval('a', a => a.href) : null;
-          const jobItem = {
-            url,
-            jobTitle,
-            company,
-            location,
-            summary,
-            date,
-          };
-          jobs.push(jobItem);
+        const jobList = (await page.$$('.jobs-search-result-item'))
+          ? await page.$$('.jobs-search-result-item')
+          : null;
+        if (jobList !== null) {
+          for (const listing of jobList) {
+            const jobTitle = (await listing.$('.listed-job-posting__title'))
+              ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
+              : null;
+            const company = (await listing.$('.listed-job-posting__company'))
+              ? await listing.$eval('.listed-job-posting__company', company => company.innerText)
+              : null;
+            const location = (await listing.$('.listed-job-posting__location'))
+              ? await listing.$eval('.listed-job-posting__location', location => location.innerText)
+              : null;
+            const summary = (await listing.$('.listed-job-posting__description'))
+              ? await listing.$eval(
+                  '.listed-job-posting__description',
+                  summary => summary.innerText
+                )
+              : null;
+            const date = (await listing.$('.posted-time-ago__text'))
+              ? await listing.$eval('.posted-time-ago__text', date => date.innerText)
+              : null;
+            let url = (await listing.$('a')) ? await listing.$eval('a', a => a.href) : null;
+            const jobItem = {
+              url,
+              jobTitle,
+              company,
+              location,
+              summary,
+              date,
+            };
+            jobs.push(jobItem);
+          }
+        } else {
+          console.log('joblist is null....');
         }
       }
 
