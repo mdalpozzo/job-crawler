@@ -31,7 +31,7 @@ app.get('/url', (req, res) => {
     try {
       const browser = await puppeteer.launch({
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: ['--no-sandbox'],
       });
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: 'networkidle2' });
