@@ -78,11 +78,12 @@ app.get('/url', (req, res) => {
       }
       //linked in
       if (url.includes('www.linkedin.com')) {
+        await page.waitFor('.jobs-search-result-item');
         const jobList = (await page.$$('.jobs-search-result-item'))
           ? await page.$$('.jobs-search-result-item')
           : null;
-        const html = await page.content();
-        console.log('HELOOOO THEERRREE', html);
+        console.log('helooooooo', jobList);
+
         for (const listing of jobList) {
           const jobTitle = (await listing.$('.listed-job-posting__title'))
             ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
