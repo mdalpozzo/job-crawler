@@ -5,6 +5,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 
+const keys = require('./config/keys.js');
+
 const app = express();
 
 const port = process.env.PORT || 8000;
@@ -83,8 +85,8 @@ app.get('/url', (req, res) => {
         ]);
         
         response.then(() => {
-          await page.type('#username', 'marlin.dalpozzo@gmail.com');
-          await page.type('#password', 'marlin.dalpozzo@gmail.com');
+          await page.type('#username', keys.email);
+          await page.type('#password', keys.lipass);
           await page.click('button');
         })
 
