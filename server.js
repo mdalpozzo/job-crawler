@@ -30,7 +30,7 @@ app.get('/url', (req, res) => {
   (async () => {
     try {
       const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         args: ['--no-sandbox'],
       });
       const page = await browser.newPage();
