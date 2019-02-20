@@ -23,7 +23,6 @@ class MainPage extends Component {
       .then(res => {
         this.setState({
           jobs: res.data,
-          html: res.data,
         });
       })
       .catch(err => {
@@ -39,7 +38,7 @@ class MainPage extends Component {
 
   linkedinJobs = () => {
     this.getPage(
-      'https://www.linkedin.com/jobs/search/?f_E=2&keywords=javascript&location=San%20Francisco%2C%20California&locationId=us.7-1-0-38-1'
+      'https://www.linkedin.com/jobs/search?keywords=javascript&location=San%20Francisco%2C%20California&locationId=PLACES.us.7-1-0-38-1&pageNum=0&position=1&f_E=2'
     );
   };
 
@@ -96,16 +95,14 @@ class MainPage extends Component {
         <button onClick={this.indeedJobs}>Indeed</button>
         <button onClick={this.linkedinJobs}>LinkedIn</button>
         <div
-        // style={{
-        //   border: '1px solid black',
-        //   minHeight: '50rem',
-        //   textAlign: 'center',
-        //   backgroundColor: '#eee',
-        // }}
+          style={{
+            border: '1px solid black',
+            minHeight: '50rem',
+            textAlign: 'center',
+            backgroundColor: '#eee',
+          }}
         >
-          {/* {jobList} */}
-          <div dangerouslySetInnerHTML={{ __html: this.state.html }} />
-          {/* <div>{this.state.html}</div> */}
+          {jobList}
         </div>
       </div>
     );
