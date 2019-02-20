@@ -38,8 +38,9 @@ app.get('/url', (req, res) => {
       await page.setUserAgent(
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
       );
-      // const html = await page.content();
+      const html = await page.content();
       // ambigous but works for now
+      console.log('HTML:', html);
 
       if (url.includes('www.indeed.com')) {
         const jobList = (await page.$$('.jobsearch-SerpJobCard'))
@@ -77,49 +78,53 @@ app.get('/url', (req, res) => {
         }
       }
       //linked in
-      if (url.includes('www.linkedin.com')) {
-        await page
-          .waitFor('.jobs-search-result-item')
-          .then(() => {
-            console.log('JOBS LOADED SUCCESFULLY');
-          })
-          .catch(err => {
-            console.log('JOBS NOT LOADED SUCCESFULLY', err);
-          });
-        const jobList = (await page.$$('.jobs-search-result-item'))
-          ? await page.$$('.jobs-search-result-item')
-          : null;
+      // if (url.includes('www.linkedin.com')) {
+      //   let topClass = '';
+      //   await page
+      //     .waitFor('.job-card-search')
+      //     .then(() => {
+      //       topClass = '.job-card-search';
+      //       console.log('JOBS LOADED SUCCESFULLY');
+      //     })
+      //     .catch(err => {
+      //       topClass = '.jobs-search-result-item';
+      //       console.log('JOBS NOT LOADED SUCCESFULLY', err);
+      //     });
+      //   const jobList = (await page.$$(topClass)) ? await page.$$(topClass) : null;
 
-        for (const listing of jobList) {
-          const jobTitle = (await listing.$('.listed-job-posting__title'))
-            ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
-            : null;
-          const company = (await listing.$('.listed-job-posting__company'))
-            ? await listing.$eval('.listed-job-posting__company', company => company.innerText)
-            : null;
-          const location = (await listing.$('.listed-job-posting__location'))
-            ? await listing.$eval('.listed-job-posting__location', location => location.innerText)
-            : null;
-          const summary = (await listing.$('.listed-job-posting__description'))
-            ? await listing.$eval('.listed-job-posting__description', summary => summary.innerText)
-            : null;
-          const date = (await listing.$('.posted-time-ago__text'))
-            ? await listing.$eval('.posted-time-ago__text', date => date.innerText)
-            : null;
-          let url = (await listing.$('a')) ? await listing.$eval('a', a => a.href) : null;
-          const jobItem = {
-            url,
-            jobTitle,
-            company,
-            location,
-            summary,
-            date,
-          };
-          jobs.push(jobItem);
-        }
-      }
+      //   console.log('JOBLIST IS:', jobList === true);
 
-      res.send(jobs);
+      //   for (const listing of jobList) {
+      //     const jobTitle = (await listing.$('.listed-job-posting__title'))
+      //       ? await listing.$eval('.listed-job-posting__title', jobTitle => jobTitle.innerText)
+      //       : null;
+      //     const company = (await listing.$('.listed-job-posting__company'))
+      //       ? await listing.$eval('.listed-job-posting__company', company => company.innerText)
+      //       : null;
+      //     const location = (await listing.$('.listed-job-posting__location'))
+      //       ? await listing.$eval('.listed-job-posting__location', location => location.innerText)
+      //       : null;
+      //     const summary = (await listing.$('.listed-job-posting__description'))
+      //       ? await listing.$eval('.listed-job-posting__description', summary => summary.innerText)
+      //       : null;
+      //     const date = (await listing.$('.posted-time-ago__text'))
+      //       ? await listing.$eval('.posted-time-ago__text', date => date.innerText)
+      //       : null;
+      //     let url = (await listing.$('a')) ? await listing.$eval('a', a => a.href) : null;
+      //     const jobItem = {
+      //       url,
+      //       jobTitle,
+      //       company,
+      //       location,
+      //       summary,
+      //       date,
+      //     };
+      //     jobs.push(jobItem);
+      //   }
+      // }
+
+      // res.send(jobs);
+      res.send(html);
       await browser.close();
     } catch (err) {
       console.log('server issue', err);

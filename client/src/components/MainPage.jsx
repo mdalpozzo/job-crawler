@@ -23,6 +23,7 @@ class MainPage extends Component {
       .then(res => {
         this.setState({
           jobs: res.data,
+          html: res.data,
         });
       })
       .catch(err => {
@@ -95,14 +96,16 @@ class MainPage extends Component {
         <button onClick={this.indeedJobs}>Indeed</button>
         <button onClick={this.linkedinJobs}>LinkedIn</button>
         <div
-          style={{
-            border: '1px solid black',
-            minHeight: '50rem',
-            textAlign: 'center',
-            backgroundColor: '#eee',
-          }}
+        // style={{
+        //   border: '1px solid black',
+        //   minHeight: '50rem',
+        //   textAlign: 'center',
+        //   backgroundColor: '#eee',
+        // }}
         >
-          {jobList}
+          {/* {jobList} */}
+          <div dangerouslySetInnerHTML={{ __html: this.state.html }} />
+          {/* <div>{this.state.html}</div> */}
         </div>
       </div>
     );
