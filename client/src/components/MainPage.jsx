@@ -38,7 +38,7 @@ class MainPage extends Component {
 
   linkedinJobs = () => {
     this.getPage(
-      'https://www.linkedin.com/jobs/search?keywords=javascript&location=San%20Francisco%2C%20California&locationId=PLACES.us.7-1-0-38-1&pageNum=0&position=1&f_E=2'
+      'https://www.linkedin.com/jobs/search?keywords=javascript&location=San%20Francisco%2C%20California&locationId=PLACES.us.7-1-0-38-1'
     );
   };
 
